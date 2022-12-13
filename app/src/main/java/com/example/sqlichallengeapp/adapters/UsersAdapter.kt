@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sqlichallengeapp.models.User
 import com.bumptech.glide.Glide
+import com.example.sqlichallengeapp.R
+import com.example.sqlichallengeapp.models.User
+import kotlinx.android.synthetic.main.item_employee.view.*
 
 
 class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
@@ -54,7 +56,6 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
     }
 
     val differ = AsyncListDiffer(this, differCallback)
-
 
 
 }
