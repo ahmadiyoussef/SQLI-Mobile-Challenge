@@ -1,5 +1,6 @@
 package com.example.sqlichallengeapp.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -9,6 +10,7 @@ import com.example.sqlichallengeapp.R
 import com.example.sqlichallengeapp.adapters.UsersAdapter
 import com.example.sqlichallengeapp.models.UsersResponse
 import com.example.sqlichallengeapp.repository.EmployeesRepository
+import com.example.sqlichallengeapp.util.Tools
 import kotlinx.android.synthetic.main.activity_employee.*
 
 
@@ -16,6 +18,7 @@ class EmployeesActivity : AppCompatActivity() {
 
     lateinit var viewModel: EmployeesViewModel
     private lateinit var adapter: UsersAdapter
+    private var dialogProgress: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +32,19 @@ class EmployeesActivity : AppCompatActivity() {
         ).get(EmployeesViewModel::class.java)
 
         viewModel.getEmployees()
+        dialogProgress = Tools.setProgressDialog(this)
 
         viewModel.employees.observe(this, Observer { resource: Resource<UsersResponse> ->
             if (resource is Resource.Success) {
+                dialogProgress?.dismiss()
                 val users = resource.data?.users.orEmpty()
                 adapter.differ.submitList(users)
+            }
+            if (resource is Resource.Loading) {
+                dialogProgress?.show()
+            }
+            if (resource is Resource.Error) {
+
             }
         })
     }
