@@ -3,12 +3,14 @@ package com.example.sqlichallengeapp.ui
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.androiddevs.sqlichallengeapp.util.Resource
 import com.example.sqlichallengeapp.models.UsersResponse
 import com.example.sqlichallengeapp.repository.EmployeesRepository
-import com.androiddevs.sqlichallengeapp.util.Resource
 import kotlinx.coroutines.launch
 
-class EmployeesViewModel(val employeeRepository: EmployeesRepository) : ViewModel() {
+class EmployeesViewModel(
+    private val employeeRepository: EmployeesRepository
+) : ViewModel() {
 
     val employees: MutableLiveData<Resource<UsersResponse>> = MutableLiveData()
 
@@ -25,6 +27,4 @@ class EmployeesViewModel(val employeeRepository: EmployeesRepository) : ViewMode
             employees.postValue(Resource.Error("Error fetching users"))
         }
     }
-
-
 }
